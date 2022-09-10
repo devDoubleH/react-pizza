@@ -134,8 +134,9 @@ function App() {
             />
           </div>
         </div>
-
-        <Card />
+        <div className="flex flex-wrap w-full justify-center items-center gap-10 p-10">
+          {all && all.map((i, key) => <Card item={i} key={key} />)}
+        </div>
       </div>
     </div>
   );
