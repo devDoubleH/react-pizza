@@ -61,6 +61,12 @@ const reducer = (state = defaultState, action) => {
     case "SET_VEGETABLES_PIZZA": {
       return { ...state, "Овощи и грибы 🌱": payload };
     }
+    case "SET_ALL": {
+      return {
+        ...state,
+        payload,
+      };
+    }
     default:
       return state;
   }

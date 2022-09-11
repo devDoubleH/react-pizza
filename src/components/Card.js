@@ -62,7 +62,7 @@ function Card(props) {
       }
       case "Четыре сезона": {
         return dispatch({
-          type: "SET_FOUR_SEASONS",
+          type: "SET_FOUR_SEASON",
           payload: state["Четыре сезона"] + 1,
         });
       }
@@ -71,6 +71,9 @@ function Card(props) {
           type: "SET_VEGETABLES_PIZZA",
           payload: state["Овощи и грибы 🌱"] + 1,
         });
+      }
+      default: {
+        return;
       }
     }
   };
@@ -95,13 +98,13 @@ function Card(props) {
 
   return (
     <div className="w-1/5 h-auto flex flex-col justify-center items-center">
-      <img src={item.imageUrl} className="w-64 h-auto" />
+      <img src={item.imageUrl} className="w-64 h-auto" alt="" />
       <p className="text-base font-bold text-center w-full">{item.name}</p>
       <div className="h-20 w-full bg-gray-100 rounded-xl flex flex-col justify-around mt-4">
         <div className="flex w-full justify-around">
           <div
             className={`w-5/12 text-center h-8 ${
-              selectedType == "yupqa" ? "bg-white" : ""
+              selectedType === "yupqa" ? "bg-white" : ""
             } flex items-center rounded-lg justify-center cursor-pointer ${
               item.types.includes(0) ? "text-black" : "text-gray-400"
             }`}
@@ -115,7 +118,7 @@ function Card(props) {
           </div>
           <div
             className={`w-5/12 text-center h-8 ${
-              selectedType == "milliy" ? "bg-white" : ""
+              selectedType === "milliy" ? "bg-white" : ""
             } flex items-center rounded-lg justify-center cursor-pointer ${
               item.types.includes(1) ? "text-black" : "text-gray-400"
             }`}

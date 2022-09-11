@@ -6,6 +6,8 @@ import { AiFillCaretUp } from "react-icons/ai";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import Card from "./components/Card";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function App() {
   const [all, setAll] = useState([]);
@@ -13,21 +15,64 @@ function App() {
 
   const filterItems = ["Mashxurlik", "Narx bo'yicha", "Alfavit bo'yicha"];
 
+  const state = useSelector((state) => state.reducer);
+
+  useEffect(() => {
+    localStorage.setItem("data", JSON.stringify(state));
+  }, [state]);
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     setAll(Pizza.pizzas);
+    setItem("hammasi");
+    navigate("#hammasi", { replace: false });
   }, []);
 
   const selectItem = (item) => {
-    console.log(item);
+    if (item.value === "Mashxurlik") {
+      navigate("#mashxurlik", { replace: false });
+    } else if (item.value === "Narx bo'yicha") {
+      navigate("#narx", { replace: false });
+    } else if (item.value === "Alfavit bo'yicha") {
+      navigate("#alfavit", { replace: false });
+    }
   };
+
+  const location = useLocation();
 
   const LinkToggle = (item) => {
     setItem(item);
   };
 
+  useEffect(() => {
+    if (location.hash === "#hammasi") {
+      setAll(Pizza.pizzas);
+    } else if (location.hash === "#mashxurlik") {
+      setItem("hammasi");
+      setAll(Pizza.pizzas.sort((a, b) => b.rating - a.rating));
+    } else if (location.hash === "#narx") {
+      setItem("hammasi");
+      setAll(Pizza.pizzas.sort((a, b) => a.price - b.price));
+    } else if (location.hash === "#alfavit") {
+      setItem("hammasi");
+      setAll(Pizza.pizzas.sort((a, b) => a.name.localeCompare(b.name)));
+    } else if (location.hash === "#goshtli") {
+      setAll(Pizza.pizzas.filter((item) => item.category === 1));
+    } else if (location.hash === "#vegetarian") {
+      setAll(Pizza.pizzas.filter((item) => item.category === 2));
+    } else if (location.hash === "#tandir") {
+      setAll(Pizza.pizzas.filter((item) => item.category === 3));
+    } else if (location.hash === "#achchiq") {
+      setAll(Pizza.pizzas.filter((item) => item.category === 4));
+    } else if (location.hash === "#mavjudemas") {
+      setAll(Pizza.pizzas.filter((item) => item.category === 5));
+    }
+  }, [location]);
+
   return (
     <div className="p-10 h-full w-full bg-yellow-400 flex">
-      <div className="h-full w-full bg-white rounded-lg flex justify-center items-center flex-col py-10">
+      <div className="h-full w-full bg-white rounded-lg flex justify-center items-center flex-col py-10 min-h-screen">
         <Header />
         <div className="w-11/12 flex justify-between mt-4">
           <ul className="flex justify-evenly items-center w-9/12 ">
